@@ -26,6 +26,7 @@ All endpoints are secured and accessible only for authenticated users. You can r
 | username | password |
 | ------ | ------ |
 | admin | password123 |
+
 In the response you will have access token, which you can use to access all the endpoints.
 
 ## How to run it:
