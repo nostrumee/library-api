@@ -1,0 +1,73 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: book-service
+          uri: lb://BOOK-SERVICE
+          predicates:
+            - Path=/api/v1/books/**
+          filters:
+            - AuthFilter
+        - id: library-service
+          uri: lb://LIBRARY-SERVICE
+          predicates:
+            - Path=/api/v1/book-orders/**
+          filters:
+            - AuthFilter
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/v1/auth/**
+        - id: book-service-docs
+          uri: lb://BOOK-SERVICE
+          predicates:
+            - Path=/book-service/v3/api-docs
+        - id: library-service-docs
+          uri: lb://LIBRARY-SERVICE
+          predicates:
+            - Path=/library-service/v3/api-docs
+        - id: auth-service-docs
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth-service/v3/api-docs
+
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+      - url: /book-service/v3/api-docs
+        name: Book Service
+      - url: /auth-service/v3/api-docs
+        name: Auth Service
+      - url: /library-service/v3/api-docs
+        name: Library Service
+
+security:
+  jwt:
+    secret: aGhoamtoamtndWdibSxCPE5CTkg8Z2hqZ2poZ3ZCR0ZHVk1CbW5ibW5iSkhHSHZibk08bnZIR0hW
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
