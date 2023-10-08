@@ -4,7 +4,7 @@
 - Library Service: registers all book orders with the information aboute dates when books were borrowed and when they must be returned.
 - Auth Service: stores users and manages authentication.
 
-Eureka Server is used as Service Registry, Spring Cloud Gateway is used as API Gateway, which provides a single antry point for the whole application.
+Eureka Server is used as Service Registry, Spring Cloud Gateway is used as API Gateway, which provides a single entry point for the whole application.
 
 ## Used technologies:
 - Java
